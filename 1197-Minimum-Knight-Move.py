@@ -13,4 +13,35 @@
 # Example 2:
 
 # Input: x = 5, y = 5
-# Output: 
+# Output: 4
+
+from collections import deque
+
+
+def minKnightMoves(self, x: int, y: int) -> int:
+    directions = [(1, 2), (-1, 2), (2, 1), (2, -1), (-1, -2), (1, -2), (-2, 1), (-2, -1)]
+
+    def bfs(x, y):
+        visted = set()
+        queue = deque([(0, 0)])
+        steps = 0
+
+        while queue:
+            cnt = len(queue)
+
+            for i in range(cnt):
+                currX, currY = queue.popleft()
+
+                if (currX, currY) == (x, y):
+                    return steps
+                
+                for dx, dy in directions:
+                    newX, newY = currX + dx, currY + dy
+                    
+                    if (newX, newY) not in visted:
+                        visted.add((newX, newY))
+                        queue.append((newX, newY))
+
+            steps += 1
+
+    return bfs(x, y)
